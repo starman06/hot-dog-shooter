@@ -11,7 +11,8 @@ let bullets = [];
 let targets = [];
 let lastEnterPress = 0;
 
-function startGame(mode) {
+function startGame(mode) {gameLoop();
+
     gameMode = mode;
     gameWon = false;
     score = 0;
