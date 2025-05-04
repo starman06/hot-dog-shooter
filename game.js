@@ -10,6 +10,8 @@ let players = [];
 let bullets = [];
 let targets = [];
 let lastEnterPress = 0;
+console.log("Players:", players);
+console.log("Targets:", targets);
 
 function startGame(mode) {
     gameMode = mode;
