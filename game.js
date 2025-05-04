@@ -11,8 +11,7 @@ let bullets = [];
 let targets = [];
 let lastEnterPress = 0;
 
-function startGame(mode) {gameLoop();
-
+function startGame(mode) {
     gameMode = mode;
     gameWon = false;
     score = 0;
@@ -33,7 +32,8 @@ function startGame(mode) {gameLoop();
 
     generateTargets(12);
     setTimeout(spawnNuclearBomb, 10000);
-    gameLoop();
+    
+    gameLoop(); // Ensure the game loop starts!
 }
 
 function generateTargets(num) {
@@ -139,17 +139,6 @@ function createExplosionEffect() {
     }
 
     drawExplosion();
-}
-
-function loseHeart() {
-    health--;
-    let heartIcons = "❤️".repeat(health);
-    document.getElementById("health").innerHTML = heartIcons;
-    if (health <= 0) {
-        alert("Game Over! You lost all hearts!");
-        document.getElementById("menu").style.display = "block";
-        canvas.style.display = "none";
-    }
 }
 
 function gameLoop() {
