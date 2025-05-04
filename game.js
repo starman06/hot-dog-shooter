@@ -148,4 +148,5 @@ function gameLoop() {
     drawTargets();
     update();
     requestAnimationFrame(gameLoop);
-}
+}startGame("single");
+
