@@ -9,9 +9,6 @@ let health = 5;
 let players = [];
 let bullets = [];
 let targets = [];
-let lastEnterPress = 0;
-console.log("Players:", players);
-console.log("Targets:", targets);
 
 function startGame(mode) {
     gameMode = mode;
@@ -35,7 +32,7 @@ function startGame(mode) {
     generateTargets(12);
     setTimeout(spawnNuclearBomb, 10000);
     
-    gameLoop(); // Ensure the game loop starts!
+    gameLoop();
 }
 
 function generateTargets(num) {
@@ -90,58 +87,12 @@ function update() {
     }
 }
 
-function spawnNuclearBomb() {
-    if (targets.length > 10) {
-        createExplosionEffect();
-        setTimeout(() => {
-            for (let i = 0; i < 10; i++) {
-                if (targets.length > 0) {
-                    let index = Math.floor(Math.random() * targets.length);
-                    targets.splice(index, 1);
-                }
-            }
-            loseHeart();
-        }, 500);
-    }
-    setTimeout(spawnNuclearBomb, 10000);
+function shoot() {
+    bullets.push({ x: players[0].x + 10, y: players[0].y, width: 10, height: 20 });
 }
 
-function createExplosionEffect() {
-    let explosionX = canvas.width / 2;
-    let explosionY = canvas.height / 3;
-    let particles = [];
-
-    for (let i = 0; i < 20; i++) {
-        particles.push({
-            x: explosionX,
-            y: explosionY,
-            vx: (Math.random() - 0.5) * 10,
-            vy: (Math.random() - 0.5) * 10,
-            size: Math.random() * 5 + 3,
-            life: Math.random() * 30 + 20
-        });
-    }
-
-    function drawExplosion() {
-        ctx.fillStyle = "rgba(255, 165, 0, 0.8)";
-        ctx.beginPath();
-        ctx.arc(explosionX, explosionY, 60, 0, Math.PI * 2);
-        ctx.fill();
-
-        particles.forEach(p => {
-            ctx.fillStyle = "rgba(255, 50, 0, 0.8)";
-            ctx.fillRect(p.x, p.y, p.size, p.size);
-            p.x += p.vx;
-            p.y += p.vy;
-            p.life--;
-        });
-
-        particles = particles.filter(p => p.life > 0);
-        if (particles.length > 0) requestAnimationFrame(drawExplosion);
-    }
-
-    drawExplosion();
-}
+// Touch support
+document.getElementById("mobileControls").addEventListener("click", shoot);
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -150,5 +101,4 @@ function gameLoop() {
     drawTargets();
     update();
     requestAnimationFrame(gameLoop);
-}startGame("single");
-
+}
