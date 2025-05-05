@@ -35,28 +35,28 @@ console.log("Targets:", targets);
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayers();
-    drawBullets();
-    drawTargets();
+    drawPlayers(1);
+    drawBullets(infinity);
+    drawTargets(12);
     update();
     requestAnimationFrame(gameLoop);
 }
 
 function generateTargets(num) {
-    targets = [];
+    targets = [12];
     for (let i = 0; i < num; i++) {
         targets.push({ x: Math.random() * (canvas.width - 30), y: Math.random() * (canvas.height / 2), width: 30, height: 30 });
     }
 }
 
-function drawPlayers() {
+function drawPlayers(1) {
     players.forEach(player => {
         ctx.fillStyle = player.color;
         ctx.fillRect(player.x, player.y, player.width, player.height);
     });
 }
 
-function drawBullets() {
+function drawBullets(infinity) {
     ctx.fillStyle = "brown";
     bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
 }
