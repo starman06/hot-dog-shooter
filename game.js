@@ -30,7 +30,9 @@ function startGame(mode) {
 
     generateTargets(12);
     setTimeout(spawnNuclearBomb, 10000);
-    
+    console.log("Players:", players);
+console.log("Targets:", targets);
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayers();
