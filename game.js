@@ -21,9 +21,8 @@ function startGame(mode) {
     document.getElementById("health").innerHTML = "❤️❤️❤️❤️❤️";
     canvas.style.display = "block";
     bullets = [];
-    targets = [];
-    
-    players = [{ x: canvas.width / 2 - 40, y: canvas.height - 50, width: 30, height: 30, color: "blue", keys: { left: "ArrowLeft", right: "ArrowRight", shoot: "Enter" } }];
+    targets = []
+ players = [{ x: canvas.width / 2 - 40, y: canvas.height - 50, width: 30, height: 30, color: "blue", keys: { left: "ArrowLeft", right: "ArrowRight", shoot: "Enter" } }];
     
     if (mode === "multi") {
         players.push({ x: canvas.width / 2 + 40, y: canvas.height - 50, width: 30, height: 30, color: "green", keys: { left: "a", right: "d", shoot: " " } });
@@ -32,7 +31,13 @@ function startGame(mode) {
     generateTargets(12);
     setTimeout(spawnNuclearBomb, 10000);
     
-    gameLoop();
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPlayers();
+    drawBullets();
+    drawTargets();
+    update();
+    requestAnimationFrame(gameLoop);
 }
 
 function generateTargets(num) {
@@ -96,9 +101,10 @@ document.getElementById("mobileControls").addEventListener("click", shoot);
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayers();
+    drawPlayers(); // This MUST be called!
     drawBullets();
-    drawTargets();
+    drawTargets(); // This MUST be called!
     update();
     requestAnimationFrame(gameLoop);
 }
+
