@@ -32,3 +32,16 @@ canvas {
     right: 10px;
     font-size: 20px;
 }
+
+/* Mobile Controls */
+#mobileControls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#mobileControls button {
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
