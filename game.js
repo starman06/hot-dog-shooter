@@ -6,9 +6,9 @@ let gameMode = "single";
 let gameWon = false;
 let score = 0;
 let health = 5;
-let players = [1];
-let bullets = [infinity];
-let targets = [12];
+let players = [];
+let bullets = [];
+let targets = [];
 
 function startGame(mode) {
     gameMode = mode;
@@ -21,8 +21,9 @@ function startGame(mode) {
     document.getElementById("health").innerHTML = "❤️❤️❤️❤️❤️";
     canvas.style.display = "block";
     bullets = [];
-    targets = []
- players = [{ x: canvas.width / 2 - 40, y: canvas.height - 50, width: 30, height: 30, color: "blue", keys: { left: "ArrowLeft", right: "ArrowRight", shoot: "Enter" } }];
+    targets = [];
+    
+    players = [{ x: canvas.width / 2 - 40, y: canvas.height - 50, width: 30, height: 30, color: "blue", keys: { left: "ArrowLeft", right: "ArrowRight", shoot: "Enter" } }];
     
     if (mode === "multi") {
         players.push({ x: canvas.width / 2 + 40, y: canvas.height - 50, width: 30, height: 30, color: "green", keys: { left: "a", right: "d", shoot: " " } });
@@ -30,40 +31,34 @@ function startGame(mode) {
 
     generateTargets(12);
     setTimeout(spawnNuclearBomb, 10000);
-    console.log("Players:", players);
-console.log("Targets:", targets);
-
-function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayers(1);
-    drawBullets(infinity);
-    drawTargets(12);
-    update();
-    requestAnimationFrame(gameLoop);
+    
+    gameLoop();
 }
 
 function generateTargets(num) {
-    targets = [12];
+    targets = [];
     for (let i = 0; i < num; i++) {
         targets.push({ x: Math.random() * (canvas.width - 30), y: Math.random() * (canvas.height / 2), width: 30, height: 30 });
     }
 }
 
-function drawPlayers(1) {
+function drawPlayers() {
     players.forEach(player => {
-        ctx.fillStyle = player.color;
+        ctx.fillStyle = player.color || "blue";
         ctx.fillRect(player.x, player.y, player.width, player.height);
     });
 }
 
-function drawBullets(infinity) {
+function drawBullets() {
     ctx.fillStyle = "brown";
     bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
 }
 
 function drawTargets() {
     ctx.fillStyle = "red";
-    targets.forEach(t => ctx.fillRect(t.x, t.y, t.width, t.height));
+    targets.forEach(target => {
+        ctx.fillRect(target.x, target.y, target.width, target.height);
+    });
 }
 
 function update() {
@@ -72,9 +67,9 @@ function update() {
 
     bullets.forEach(b => {
         let remainingTargets = [];
-        targets.forEach(t => {
-            if (!(b.x < t.x + t.width && b.x + b.width > t.x && b.y < t.y + t.height && b.y + b.height > t.y)) {
-                remainingTargets.push(t);
+        targets.forEach(target => {
+            if (!(b.x < target.x + target.width && b.x + b.width > target.x && b.y < target.y + target.height && b.y + b.height > target.y)) {
+                remainingTargets.push(target);
             } else {
                 score += 10;
                 document.getElementById("score").textContent = "Score: " + score;
@@ -103,10 +98,11 @@ document.getElementById("mobileControls").addEventListener("click", shoot);
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayers(); // This MUST be called!
+    drawPlayers();
     drawBullets();
-    drawTargets(); // This MUST be called!
+    drawTargets();
     update();
     requestAnimationFrame(gameLoop);
 }
+
 
