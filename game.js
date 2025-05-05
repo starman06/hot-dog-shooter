@@ -6,9 +6,9 @@ let gameMode = "single";
 let gameWon = false;
 let score = 0;
 let health = 5;
-let players = [];
-let bullets = [];
-let targets = [];
+let players = [1];
+let bullets = [infinity];
+let targets = [12];
 
 function startGame(mode) {
     gameMode = mode;
